@@ -13,24 +13,22 @@ sudo apt-get -y install software-properties-common
 ### Installing useful command line packages
 
 ```shell
-sudo apt-get -y update
-sudo apt-get install net-tools
-sudo apt-get -y update
-sudo apt-get install iftop
+sudo apt-get -y install net-tools
+sudo apt-get -y install iftop
 ```
 
 ### Installing software
 
 ```shell
-sudo apt -y install snapd
+sudo apt-get -y install snapd
 sudo add-apt-repository -y ppa:ethereum/ethereum
-sudo apt-get -y update
+sudo apt-get update
 sudo apt-get -y install ethereum
-sudo apt-get -y upgrade geth
+sudo apt-get install --only-upgrade geth
 sudo snap install go --classic
 ```
 
-### Create Prysm BEACON client
+### Create Prysm BEACON Consensus client
 
 In your /home/ubuntu/ folder (~), create a folder structure as follows:
 
@@ -39,9 +37,10 @@ mkdir ethereum
 cd ethereum
 mkdir consensus
 mkdir execution
+cd consensus
 ```
 
-Then change directory into your consensus folder and install prysm:
+Istall prysm within the consensus folder created above:
 
 ```shell /home/ubuntu/ethereum/consensus/
 mkdir prysm && cd prysm
@@ -86,9 +85,21 @@ Replace the --suggested-fee-recipient with your own address below:
 ./prysm.sh beacon-chain --execution-endpoint=http://localhost:8551 --jwt-secret=/home/ubuntu/ethereum/consensus/prysm/jwt.hex --suggested-fee-recipient=0x0d09aEC2D10F396fB59482644708CBd353798b87
 ```
 
+### Test Geth
+
+Navigate to your Geth execution folder
+
+```shell
+cd /home/ubuntu/ethereum/execution/
+```
+
+geth --http --http.addr "0.0.0.0" --http.port "8545" --http.corsdomain "\*" --http.api personal,eth,net,web3,debug,txpool,admin --authrpc.jwtsecret /home/ubuntu/ethereum/consensus/prysm/jwt.hex --ws --ws.port 8546 --ws.api eth,net,web3,txpool,debug --metrics --maxpeers 500
+
 Great. We are now ready to set these up to run as services.
 
 ### GETH Service Setup
+
+First, stop any instances of prysm or geth from running.
 
 Note: Run Prysm Beacon node below in conjuction with this step but do geth first.
 
@@ -114,10 +125,15 @@ You should see an active status and the node starting to connect to peers.
 
 Make sure geth is running before doing this next step.
 
-Takes a few days to sync if not using the below:
+Takes a few days to sync. To speed this up to seconds, the below is used (remove these from the .service file if needed):
+
 --checkpoint-sync-url=https://sync-mainnet.beaconcha.in --genesis-beacon-api-url=https://sync-mainnet.beaconcha.in
 
-These docs assume you want to connect and trust the above.
+These docs just assume you want to connect and trust the above.
+
+If they dont work, remove them and wait a few days to sync your beacon node.
+
+Right now, just copy the prysm.service as is into the below directory.
 
 ```shell
 sudo nano /lib/systemd/system/prysm.service
@@ -127,7 +143,7 @@ sudo nano /lib/systemd/system/prysm.service
 
 ### Monitor
 
-It should take about 30 minutes for your node to start showing get as syncing (geth attach, eth.syncing).
+It usually will take about 30-60 minutes for your node to start showing get as syncing (geth attach, eth.syncing).
 
 You can enter into the mode to check this by following:
 
@@ -146,4 +162,8 @@ txpool.status;
 admin.nodeInfo;
 admin.peers;
 admin.nodeInfo.protocols;
+```
+
+```shell
+exit
 ```
