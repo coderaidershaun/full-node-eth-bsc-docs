@@ -1,0 +1,14 @@
+[Unit]
+Description=Prysm Beacon consensus client
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/home/ubuntu
+User=ubuntu
+ExecStart=/home/ubuntu/ethereum/consensus/prysm/prysm.sh beacon-chain --checkpoint-sync-url=https://sync-mainnet.beaconcha.in --genesis-beacon-api-url=https://sync-mainnet.beaconcha.in --execution-endpoint=http://localhost:8551 --jwt-secret=/home/ubuntu/ethereum/consensus/prysm/jwt.hex --suggested-fee-recipient=0x0d09aEC2D10F396fB59482644708CBd353798b87
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

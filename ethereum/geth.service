@@ -1,0 +1,14 @@
+[Unit]
+Description=Geth Full Node
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/home/ubuntu
+User=ubuntu
+ExecStart=/usr/bin/geth --http --http.addr "0.0.0.0" --http.port "8545" --http.corsdomain "*" --http.api personal,eth,net,web3,debug,txpool,admin --authrpc.jwtsecret /home/ubuntu/ethereum/consensus/prysm/jwt.hex --ws --ws.port 8546 --ws.api eth,net,web3,txpool,debug --metrics --maxpeers 500
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
