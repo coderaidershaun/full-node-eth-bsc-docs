@@ -1,5 +1,5 @@
 server {
-    server_name ns3227693.ip-57-129-140.eu;
+    server_name ns5024997.ip-148-113-20.net;
 
     location / {
         if ($request_method = OPTIONS) {
@@ -24,8 +24,8 @@ server {
 
     listen [::]:443 ssl ipv6only=on;
     listen 443 ssl;
-    ssl_certificate /etc/letsencrypt/live/ns3227699.ip-57-129-140.eu/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ns3227699.ip-57-129-140.eu/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ns5024997.ip-148-113-20.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ns5024997.ip-148-113-20.net/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
@@ -35,13 +35,13 @@ server {
     real_ip_recursive       on;
     real_ip_header          X-Forwarded-For;
 
-    if ($host = ns3227699.ip-57-129-140.eu) {
+    if ($host = ns5024997.ip-148-113-20.net) {
         return 301 https://$host$request_uri;
     }
 
     listen 80 ;
     listen [::]:80 ;
-    server_name ns3227699.ip-57-12*-140.eu;
+    server_name ns5024997.ip-148-113-20.net;
     return 404;
 
 }

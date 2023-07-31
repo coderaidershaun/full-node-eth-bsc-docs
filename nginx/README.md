@@ -13,7 +13,7 @@ sudo apt-get install python3-certbot-nginx
 Replace with your server address:
 
 ```shell
-sudo certbot --nginx -d ns3227623.ip-57-129-140.eu
+sudo certbot --nginx -d ns5024997.ip-148-113-20.net
 ```
 
 Make sure cert updates monthly
@@ -25,21 +25,23 @@ sudo nano /etc/crontab
 
 ### Create Username and Password
 
-"mr_shaun" is the user in this instance. You can use anything here.
+"my_username" is the user in this instance. You can use anything here.
 
 ```shell
-sudo htpasswd -c /etc/nginx/htpasswd.users mr_shaun
+sudo htpasswd -c /etc/nginx/htpasswd.users my_username
 ```
 
 Enter password: MyPassword@123
 
 ### Change the Default NGINX file
 
-first update the nginx.conf file to have this:
+first update the nginx.conf file:
 
 ```shell
 sudo nano /etc/nginx/nginx.conf
 ```
+
+Insert the lines below in the places shown:
 
 ```text
 http { ...
@@ -61,6 +63,8 @@ Override with the "default" file saved in this directory. Replace all url instan
 sudo nano /etc/nginx/sites-enabled/default
 ```
 
+(Remove contents of old default file and replace with the one in the nginx folder here)
+
 ### Test and Set NGINX
 
 Run Test
@@ -81,8 +85,14 @@ sudo service nginx enable
 Replace the below url with your correct url:
 
 ```text
-curl -X POST https://ns3227623.ip-57-129-140.eu \
+curl -X POST https://ns5024997.ip-148-113-20.net \
  -H "Content-Type: application/json" \
- -u mr_shaun:MyPassword@123 \
+ -u my_username:MyPassword@123 \
  --data '{"jsonrpc":"2.0", "method":"eth_blockNumber", "id": 1}'
 ```
+
+### Final Check with External Connection
+
+Replace your domain with the below file (and run):
+
+https://colab.research.google.com/drive/197WWVyBrvUbIqGgORyqxjLiCHBZKdYWR#scrollTo=-KRynyA9p4fa

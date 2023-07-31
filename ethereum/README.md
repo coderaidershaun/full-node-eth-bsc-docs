@@ -141,6 +141,10 @@ sudo nano /lib/systemd/system/prysm.service
 
 <i>Then paste in the information from the prysm.service file</i>
 
+### Setup NGINX
+
+Follow NGINX Instructions to access queries remotely.
+
 ### Monitor
 
 It usually will take about 30-60 minutes for your node to start showing get as syncing (geth attach, eth.syncing).
@@ -156,14 +160,18 @@ The one of the commands:
 ```javascript
 eth.syncing;
 eth.blockNumber;
-eth.pendingTransactions;
-eth.hashrate;
+net.peerCount;
 txpool.status;
 admin.nodeInfo;
 admin.peers;
-admin.nodeInfo.protocols;
 ```
 
 ```shell
 exit
+```
+
+### Check blocknumber using Curl
+
+```shell
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' -H "Content-Type: application/json" http://localhost:8545
 ```
