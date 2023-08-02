@@ -32,30 +32,14 @@ sudo ss -tuln
 
 ### Allow Specific Ports
 
-For Ethereum:
-
 <b>WARNING: DO NOT FORGET PORT 22</b>
-
-Ports 13000 and 12000 for Prysm
 
 ```shell
 sudo ufw allow 22/tcp
-sudo ufw allow 30303
-sudo ufw allow 13000
-sudo ufw allow 12000
-sudo ufw allow 8545/tcp
-sudo ufw allow 8546/tcp
-```
-
-Additional for Binance Smart Chain on same node (not recommended to run two blockchains on one machine, but in case you want to):
-
-<i>Note: Look at the conf.toml file to see what is being used.</i>
-
-```shell
 sudo ufw allow 30311
 sudo ufw allow 30304
-sudo ufw allow 8547/tcp
-sudo ufw allow 8548/tcp
+sudo ufw allow 8545/tcp
+sudo ufw allow 8546/tcp
 ```
 
 For NGINX:
@@ -70,8 +54,6 @@ If wanting to disable RPC requests:
 ```shell
 sudo ufw deny 8545/tcp
 sudo ufw deny 8546/tcp
-sudo ufw deny 8547/tcp
-sudo ufw deny 8548/tcp
 ```
 
 ### Enable the Firewall
