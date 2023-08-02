@@ -1,5 +1,7 @@
 # Installing for Binance Smart Chain
 
+NOTE: You need extensive hardware requirements to run a full BNB Node. The official docs say 3T of SSD, but in reality recommend to provision for 50% to 100% more than this. 3T will run out of storage when decompressing chain data.
+
 https://docs.bnbchain.org/docs/validator/fullnode/
 
 ### Preparations
