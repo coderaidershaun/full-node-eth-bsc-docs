@@ -57,20 +57,6 @@ Prysm will output your jwt.hex file path, such as:
 
 /home/ubuntu/ethereum/consensus/prysm/jwt.hex
 
-### Test Your Execution (GETH) Client
-
-Navigate to your ethereum folder
-
-```shell
-cd /home/ubuntu/ethereum/execution/
-```
-
-Note: Make sure the correct jwt.hex filepath is used below:
-
-```shell /home/ubuntu/ethereum/execution/
-geth --http --http.api personal,eth,net,web3,debug,txpool,admin --authrpc.jwtsecret /home/ubuntu/ethereum/consensus/prysm/jwt.hex --ws --ws.port 8546 --ws.api eth,net,web3,txpool,debug --metrics --maxpeers 500
-```
-
 ### Start Prysm Beacon Node
 
 Navigate to your prysm folder
@@ -140,6 +126,14 @@ sudo nano /lib/systemd/system/prysm.service
 ```
 
 <i>Then paste in the information from the prysm.service file</i>
+
+```shell
+sudo systemctl daemon-reload
+sudo systemctl enable prysm
+sudo systemctl start prysm
+sudo systemctl status prysm
+sudo journalctl -f -u prysm
+```
 
 ### Setup NGINX
 
